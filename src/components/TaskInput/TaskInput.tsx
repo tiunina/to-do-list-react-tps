@@ -1,18 +1,23 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addTaskThunk } from "../../redux/operations.js";
-import * as Yup from "yup";
+import { addTaskThunk } from "../../redux/operations";
+import { AppDispatch } from "../../redux/store";
+import { Task } from "../../types";
 
-const TaskInput = () => {
-  const dispatch = useDispatch();
+interface FormValue {
+  text: string;
+}
 
-  const { register, handleSubmit, reset } = useForm();
+const TaskInput: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
 
-  const onSubmit = (data) => {
+  const { register, handleSubmit, reset } = useForm<FormValue>();
+
+  const onSubmit = (data: FormValue) => {
     if (data.text.trim()) {
-      const newTask = {
-        id: Date.now(),
+      const newTask: Task = {
+        id: String(Date.now()),
         task: data.text,
         isCompleted: false,
       };
@@ -22,14 +27,9 @@ const TaskInput = () => {
     }
   };
 
-  const InputSchema = Yup.object().shape({
-    taskInput: Yup.string().min(2).required("Це поле обов'язкове!"),
-  });
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
-        name="taskInput"
         placeholder="Add a task..."
         {...register("text", { required: true })}
       />

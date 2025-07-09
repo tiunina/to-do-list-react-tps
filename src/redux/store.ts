@@ -11,15 +11,17 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { PersistConfig } from "redux-persist";
+import { TaskState } from "../types";
 
-const persistConfig = {
+const persistConfig: PersistConfig<TaskState> = {
   key: "root",
   version: 1,
   storage,
   blacklist: ["filter"],
 };
 
-const persistedReducer = persistReducer(persistConfig, taskReducer);
+const persistedReducer = persistReducer<TaskState>(persistConfig, taskReducer);
 export const store = configureStore({
   reducer: {
     tasks: persistedReducer,
@@ -36,3 +38,5 @@ export const store = configureStore({
 // export default store;
 
 export const persistor = persistStore(store);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

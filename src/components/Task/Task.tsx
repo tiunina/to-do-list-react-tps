@@ -1,10 +1,17 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import s from "./Task.module.css";
-import { toggleTask } from "../../redux/taskSlice.js";
-import { deleteTaskThunk } from "../../redux/operations.js";
-const Task = ({ isCompleted, task, id }) => {
-  const dispatch = useDispatch();
+import { toggleTask } from "../../redux/taskSlice";
+import { deleteTaskThunk } from "../../redux/operations";
+import { AppDispatch } from "../../redux/store";
+
+interface TaskProps {
+  id: string;
+  task: string;
+  isCompleted: boolean;
+}
+const Task: React.FC<TaskProps> = ({ isCompleted, task, id }) => {
+  const dispatch = useDispatch<AppDispatch>();
   return (
     <li className={s.item}>
       <input

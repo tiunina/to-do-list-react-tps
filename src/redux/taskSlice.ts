@@ -1,7 +1,9 @@
-import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 import { addTaskThunk, deleteTaskThunk, fetchData } from "./operations.js";
+import { Task, TaskState } from "../types.js";
+import type { RootState } from "./store";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: TaskState = {
   tasks: [],
   isLoading: false,
   isError: false,
@@ -11,30 +13,31 @@ const slice = createSlice({
   name: "tasks",
   initialState: INITIAL_STATE,
   reducers: {
-    // deleteTask: (state, action) => {
-    //   state.tasks = state.tasks.filter((task) => task.id !== action.payload);
-    // },
-
-    // addTask: (state, action) => {
-    //   state.tasks.push(action.payload);
-    // },
-
-    toggleTask: (state, action) => {
+    toggleTask: (state, action: PayloadAction<string>) => {
       const item = state.tasks.find((item) => item.id === action.payload);
-      item.isCompleted = !item.isCompleted;
+      if (item) {
+        item.isCompleted = !item.isCompleted;
+      }
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchData.fulfilled, (state, action) => {
+      .addCase(fetchData.fulfilled, (state, action: PayloadAction<Task[]>) => {
         state.tasks = action.payload;
         state.isLoading = false;
       })
-      .addCase(deleteTaskThunk.fulfilled, (state, action) => {
-        state.tasks = state.tasks.filter((item) => item.id !== action.payload);
-      })
-      .addCase(addTaskThunk.fulfilled, (state, action) => {
+      .addCase(
+        deleteTaskThunk.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.tasks = state.tasks.filter(
+            (item) => item.id !== action.payload
+          );
+          state.isLoading = false;
+        }
+      )
+      .addCase(addTaskThunk.fulfilled, (state, action: PayloadAction<Task>) => {
         state.tasks.push(action.payload);
+        state.isLoading = false;
       })
       .addMatcher(
         isAnyOf(
@@ -55,7 +58,7 @@ const slice = createSlice({
         ),
         (state, action) => {
           state.isLoading = false;
-          state.isError = action.payload;
+          state.isError = (action.payload as string) || "Something went wrong";
         }
       );
   },
@@ -64,4 +67,4 @@ const slice = createSlice({
 export const taskReducer = slice.reducer;
 export const { toggleTask } = slice.actions;
 
-export const selectTasks = (state) => state.tasks.tasks;
+export const selectTasks = (state: RootState) => state.tasks.tasks;
