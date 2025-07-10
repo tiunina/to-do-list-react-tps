@@ -39,6 +39,17 @@ const slice = createSlice({
         state.tasks.push(action.payload);
         state.isLoading = false;
       })
+      // .addCase(
+      //   updateTaskThunk.fulfilled,
+      //   (state, action: PayloadAction<Task>) => {
+      //     const item = state.tasks.find(
+      //       (item) => item.id === action.payload.id
+      //     );
+      //     if (item) {
+      //       item.task = action.payload.task;
+      //     }
+      //   }
+      // )
       .addMatcher(
         isAnyOf(
           fetchData.pending,

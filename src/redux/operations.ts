@@ -42,3 +42,15 @@ export const addTaskThunk = createAsyncThunk<Task, Task>(
     }
   }
 );
+
+// export const updateTaskThunk = createAsyncThunk<Task, Task>(
+//   "tasks/updateTask",
+//   async (body, thunkAPI) => {
+//     try {
+//       const { data } = await axios.put(`/tasks/${body.id}`, body);
+//       return data;
+//     } catch (error: any) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );

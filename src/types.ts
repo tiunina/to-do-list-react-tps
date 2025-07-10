@@ -9,3 +9,7 @@ export interface TaskState {
   isLoading: boolean;
   isError: boolean | string;
 }
+
+export interface FormValue {
+  text: string;
+}
