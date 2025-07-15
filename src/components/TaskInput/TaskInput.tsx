@@ -17,6 +17,7 @@ const TaskInput: React.FC = () => {
   const { control, handleSubmit, reset } = useForm<FormValue>({
     resolver: yupResolver(InputSchema),
     mode: "onChange",
+    defaultValues: { text: "" },
   });
 
   const onSubmit = (data: FormValue) => {
@@ -61,7 +62,7 @@ const TaskInput: React.FC = () => {
         />
 
         <Button type="submit" variant="contained">
-          Add
+          Add Task
         </Button>
       </Box>
     </Paper>
