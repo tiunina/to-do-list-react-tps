@@ -12,7 +12,9 @@
   transition: background-color 0.2s ease;
   cursor: pointer;
 }
-
+.item .btn {
+  margin-left: 10px;
+}
 .item:hover {
   background-color: #e0e0e0;
 }
@@ -20,6 +22,9 @@
 .task {
   margin-right: 20px;
   margin-left: 10px;
+}
+.strike {
+  text-decoration: line-through;
 }
 .btn {
   background-color: burlywood;

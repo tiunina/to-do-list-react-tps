@@ -23,7 +23,6 @@ export const deleteTaskThunk = createAsyncThunk<string, string>(
       console.log("Deleting task with ID:", id);
       await axios.delete(`/tasks/${id}`);
       return id;
-      // thunkAPI.dispatch(fetchData());
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -36,9 +35,21 @@ export const addTaskThunk = createAsyncThunk<Task, Task>(
     try {
       const response = await axios.post<Task>("tasks", body);
       return response.data;
-      // thunkAPI.dispatch(fetchData());
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
+
+export const updateTaskThunk = createAsyncThunk<
+  Task,
+  Task,
+  { rejectValue: string }
+>("tasks/updateTask", async (task: Task, thunkAPI) => {
+  try {
+    const { data } = await axios.put<Task>(`/tasks/${task.id}`, task);
+    return data;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.message || "Unknown error");
+  }
+});

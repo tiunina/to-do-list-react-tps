@@ -1,6 +1,11 @@
 import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
-import { addTaskThunk, deleteTaskThunk, fetchData } from "./operations.js";
-import { Task, TaskState } from "../types.js";
+import {
+  addTaskThunk,
+  deleteTaskThunk,
+  fetchData,
+  updateTaskThunk,
+} from "./operations";
+import { Task, TaskState } from "../types";
 import type { RootState } from "./store";
 
 const INITIAL_STATE: TaskState = {
@@ -39,6 +44,18 @@ const slice = createSlice({
         state.tasks.push(action.payload);
         state.isLoading = false;
       })
+      .addCase(
+        updateTaskThunk.fulfilled,
+        (state, action: PayloadAction<Task>) => {
+          const item = state.tasks.find(
+            (item) => item.id === action.payload.id
+          );
+          if (item) {
+            item.task = action.payload.task;
+            item.isCompleted = action.payload.isCompleted;
+          }
+        }
+      )
       .addMatcher(
         isAnyOf(
           fetchData.pending,
