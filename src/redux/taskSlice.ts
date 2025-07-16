@@ -10,6 +10,8 @@ import type { RootState } from "./store";
 
 const INITIAL_STATE: TaskState = {
   tasks: [],
+  filter: "",
+  filterByStatus: "all",
   isLoading: false,
   isError: false,
 };
@@ -23,6 +25,13 @@ const slice = createSlice({
       if (item) {
         item.isCompleted = !item.isCompleted;
       }
+    },
+
+    setFilterByStatus: (
+      state,
+      action: PayloadAction<"all" | "completed" | "active">
+    ) => {
+      state.filterByStatus = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -82,6 +91,6 @@ const slice = createSlice({
 });
 
 export const taskReducer = slice.reducer;
-export const { toggleTask } = slice.actions;
+export const { toggleTask, setFilterByStatus } = slice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
