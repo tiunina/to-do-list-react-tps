@@ -6,6 +6,8 @@ export interface Task {
 
 export interface TaskState {
   tasks: Task[];
+  filter: string;
+  filterByStatus: "all" | "completed" | "active";
   isLoading: boolean;
   isError: boolean | string;
 }

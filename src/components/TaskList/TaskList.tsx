@@ -5,16 +5,23 @@ import { selectTasks } from "../../redux/taskSlice";
 import TaskItem from "../Task/TaskItem";
 import { fetchData } from "../../redux/operations";
 import { AppDispatch } from "../../redux/store";
+import { selectFilter, selectFilteredTasks } from "../../redux/selector";
 const TaskList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchData());
   }, [dispatch]);
-  const tasks = useSelector(selectTasks);
+  // const tasks = useSelector(selectTasks);
+  const tasks = useSelector(selectFilteredTasks);
+  const filter = useSelector(selectFilter);
+  const filterData = tasks.filter((task) =>
+    task.task.toLowerCase().includes(filter)
+  );
+
   return (
     <ul className={s.list}>
-      {tasks?.map((item) => {
+      {filterData?.map((item) => {
         if (!item || !item.id) return null;
         return <TaskItem key={item.id} {...item} />;
       })}
