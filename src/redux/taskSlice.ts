@@ -10,7 +10,7 @@ import type { RootState } from "./store";
 
 const INITIAL_STATE: TaskState = {
   tasks: [],
-  filter: "",
+  filter: "all",
   filterByStatus: "all",
   isLoading: false,
   isError: false,

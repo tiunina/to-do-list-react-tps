@@ -14,7 +14,7 @@ const TaskInput: React.FC = () => {
   const InputSchema = Yup.object().shape({
     text: Yup.string().min(2).required(),
   });
-  const { control, handleSubmit, reset } = useForm<FormValue>({
+  const { control, handleSubmit, reset, register } = useForm<FormValue>({
     resolver: yupResolver(InputSchema),
     mode: "onChange",
     defaultValues: { text: "" },
@@ -26,6 +26,7 @@ const TaskInput: React.FC = () => {
         id: String(Date.now()),
         task: data.text,
         isCompleted: false,
+        dueDate: data.dueDate,
       };
       console.log(newTask);
       dispatch(addTaskThunk(newTask));
@@ -50,14 +51,24 @@ const TaskInput: React.FC = () => {
           defaultValue=""
           // rules={{ required: "Task is required" }}
           render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              label="Task"
-              variant="outlined"
-              fullWidth
-              error={!!fieldState.error}
-              helperText={fieldState.error?.message}
-            />
+            <>
+              <TextField
+                {...field}
+                label="Task"
+                variant="outlined"
+                fullWidth
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message}
+              />
+              <TextField
+                label="Due Date"
+                type="datetime-local"
+                // InputLabelProps={{
+                //   shrink: true,
+                // }}
+                {...register("dueDate")}
+              />
+            </>
           )}
         />
 

@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { render, screen, cleanup } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
 import { taskReducer } from "../redux/taskSlice";
+import DueDate from "../components/DueDate/DueDate";
 
 // jest.mock("../components/Task/Task", () => (props: any) => (
 //   <li>Mocked Task {props.id}</li>
@@ -17,11 +18,13 @@ afterEach(() => {
 const preloadedState = {
   tasks: {
     tasks: [
-      { id: "1", task: "Test 1", isCompleted: false },
-      { id: "2", task: "Test 2", isCompleted: true },
+      { id: "1", task: "test", isCompleted: false, dueDate: undefined },
+      { id: "2", task: "testpro", isCompleted: true, dueDate: undefined },
     ],
     isLoading: false,
     isError: false,
+    filterByStatus: "all",
+    filter: "all",
   },
 };
 
@@ -54,7 +57,7 @@ describe("TaskList", () => {
     );
 
     expect(asFragment()).toMatchSnapshot();
-    expect(screen.getByText("Test 1")).toBeInTheDocument();
-    expect(screen.getByText("Test 2")).toBeInTheDocument();
+    expect(screen.getByText(/test/i)).toBeInTheDocument();
+    expect(screen.getByText(/testpro/i)).toBeInTheDocument();
   });
 });

@@ -20,3 +20,17 @@ export const selectFilteredTasks = createSelector(
     }
   }
 );
+
+export const selectUpcomingTask = createSelector([selectTasks], (tasks) => {
+  return tasks.filter((task) => {
+    if (!task.dueDate || task.isCompleted) return false;
+    return new Date(task.dueDate).getTime() > Date.now();
+  });
+});
+
+export const selectOverdueTask = createSelector([selectTasks], (tasks) => {
+  return tasks.filter((task) => {
+    if (!task.dueDate || task.isCompleted) return false;
+    return new Date(task.dueDate).getTime() < Date.now();
+  });
+});

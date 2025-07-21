@@ -8,7 +8,7 @@ exports[`TaskList renders tasks and matches snapshot 1`] = `
         type="checkbox"
       />
       <span>
-        Test 1
+        test
       </span>
       <div>
         <button
@@ -26,7 +26,7 @@ exports[`TaskList renders tasks and matches snapshot 1`] = `
         type="checkbox"
       />
       <span>
-        Test 2
+        testpro
       </span>
       <div>
         <button

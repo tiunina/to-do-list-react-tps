@@ -10,13 +10,14 @@ interface TaskProps {
   id: string;
   task: string;
   isCompleted: boolean;
+  dueDate?: string;
 }
-const TaskItem: React.FC<TaskProps> = ({ isCompleted, task, id }) => {
+const TaskItem: React.FC<TaskProps> = ({ isCompleted, task, id, dueDate }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleToggle = (): void => {
-    console.log("Toggling task:", isCompleted);
-    dispatch(updateTaskThunk({ id, task, isCompleted: !isCompleted }));
+    // console.log("Toggling task:", isCompleted);
+    dispatch(updateTaskThunk({ id, task, isCompleted: !isCompleted, dueDate }));
   };
 
   return (

@@ -14,10 +14,15 @@ const TaskList: React.FC = () => {
   }, [dispatch]);
   // const tasks = useSelector(selectTasks);
   const tasks = useSelector(selectFilteredTasks);
+
   const filter = useSelector(selectFilter);
-  const filterData = tasks.filter((task) =>
-    task.task.toLowerCase().includes(filter)
-  );
+
+  const filterData =
+    filter === "all"
+      ? tasks
+      : tasks.filter((task) =>
+          task.task.toLowerCase().includes(filter.toLowerCase())
+        );
 
   return (
     <ul className={s.list}>
