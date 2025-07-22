@@ -60,14 +60,8 @@ const TaskInput: React.FC = () => {
                 error={!!fieldState.error}
                 helperText={fieldState.error?.message}
               />
-              <TextField
-                label="Due Date"
-                type="datetime-local"
-                // InputLabelProps={{
-                //   shrink: true,
-                // }}
-                {...register("dueDate")}
-              />
+              <Typography variant="h6">Due Date</Typography>
+              <TextField type="date" {...register("dueDate")} />
             </>
           )}
         />

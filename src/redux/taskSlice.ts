@@ -26,6 +26,12 @@ const slice = createSlice({
         item.isCompleted = !item.isCompleted;
       }
     },
+    reorderTasks(state, action: PayloadAction<string[]>) {
+      const newOrder = action.payload; // array of task IDs in new order
+      state.tasks = newOrder
+        .map((id) => state.tasks.find((task) => task.id === id)!)
+        .filter(Boolean);
+    },
 
     setFilterByStatus: (
       state,
@@ -91,6 +97,6 @@ const slice = createSlice({
 });
 
 export const taskReducer = slice.reducer;
-export const { toggleTask, setFilterByStatus } = slice.actions;
+export const { toggleTask, setFilterByStatus, reorderTasks } = slice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks.tasks;
